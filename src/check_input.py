@@ -1,4 +1,4 @@
-def check_input(inp, lst, verb = True):
+def check_input(inp, lst, case_sensitive = False, verbose = True):
     """
     Check if input is in the list of options.
 
@@ -9,25 +9,26 @@ def check_input(inp, lst, verb = True):
         (str) out - selected option from list or None
     """
 
-    assert isinstance(inp, str), 'Input must be a string'
+    if not isinstance(inp, str): inp = str(inp)
     assert len(inp) > 0, 'Input must not be an empty string'
-    assert isinstance(lst, list), 'List must be a list of strings'
-    for f in lst:
-        assert isinstance(f, str), 'List must be a list of strings'
-        assert len(f) > 0, 'List must not include empty strings'
-    
+    assert isinstance(lst, list), 'Input must be non-empty list'
+    for i in range(len(lst)):
+        if not isinstance(lst[i], str): lst[i] = str(lst[i])
+        assert len(lst[i]) > 0, 'List must not include empty strings'
+
     found_options = []
 
-    if inp == '': print('Empty')
-    
     for inp_check in lst:
-        #print(inp_check)
-        if inp_check.startswith(inp):
+        if inp_check.startswith(inp) or not case_sensitive and inp_check.lower().startswith(inp):
             found_options.append(inp_check)
-    if len(found_options) == 1:
+    
+    if len(found_options) == 0:
+        out = None
+        if verbose: print("Your answer doesn't fit to any option. Please try again.")
+    elif len(found_options) == 1:
         out = found_options[0]
-        if verb: print('OK, you have chosen ' +  out + '.\n')
+        if verbose: print('OK, you have chosen ' +  out + '.')
     else:
         out = None
-        if verb: print('Your answer fits to multiple options ({}). Please try again.'.format(', '.join(f for f in found_options)))
+        if verbose: print('Your answer fits to multiple options ({}). Please try again.'.format(', '.join(f for f in found_options)))
     return out
