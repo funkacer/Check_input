@@ -9,25 +9,38 @@ def check_input(inp, lst, case_sensitive = False, verbose = True):
         (str) out - selected option from list or None
     """
 
-    if not isinstance(inp, str): inp = str(inp)
-    assert len(inp) > 0, 'Input must not be an empty string'
+    #if not isinstance(inp, str): inp = str(inp)
+    assert len(str(inp)) > 0, 'Input must not be an empty string'
     assert isinstance(lst, list), 'Input must be non-empty list'
-    for i in range(len(lst)):
-        if not isinstance(lst[i], str): lst[i] = str(lst[i])
-        assert len(lst[i]) > 0, 'List must not include empty strings'
+    for l in lst:
+        assert len(str(l)) > 0, 'List must not include empty strings'
+        assert isinstance(l, (str, int, float)), 'List must include strings, floats or integers'
 
     found_options = []
+    match = 0
+    found = None
 
     for inp_check in lst:
-        if inp_check.startswith(inp) or not case_sensitive and inp_check.lower().startswith(inp):
-            found_options.append(inp_check)
-    
+        print(inp_check.__class__)
+        if isinstance(inp_check, str):
+            if inp_check.startswith(inp) or not case_sensitive and inp_check.lower().startswith(inp):
+                found_options.append(inp_check)
+        else:
+            if str(inp_check).startswith(str(inp)):
+                found_options.append(str(inp_check))
+            if inp_check == inp:
+                match = 1
+                found = inp_check
+
     if len(found_options) == 0:
         out = None
         if verbose: print("Your answer doesn't fit to any option. Please try again.")
     elif len(found_options) == 1:
         out = found_options[0]
-        if verbose: print('OK, you have chosen ' +  out + '.')
+        if verbose: print('OK, you have chosen ' +  str(out) + '.')
+    elif match == 1:
+        out = found
+        if verbose: print('OK, you have chosen ' +  str(out) + '.')
     else:
         out = None
         if verbose: print('Your answer fits to multiple options ({}). Please try again.'.format(', '.join(f for f in found_options)))
