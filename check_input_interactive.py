@@ -23,8 +23,10 @@ def main():
                 option = integer
             elif floa is not None:
                 option = floa
-            print(i, option.__class__)
+            #print(i, option.__class__)
             options[i] = option
+
+        #print(options)
 
         answer = input('Give answer:')
         integer, floa = None, None
@@ -42,7 +44,7 @@ def main():
             answer = integer
         elif floa is not None:
             answer = floa
-        print(i, answer.__class__)
+        #print(i, answer.__class__)
 
         print(check_input(answer, options, False, True))
 
