@@ -1,4 +1,4 @@
-def check_input(inp, lst, case_sensitive = False, verbose = True):
+def check_input(inp, lst, case_sensitive = True, verbose = True):
     """
     Check if input is in the list of options.
 
@@ -27,7 +27,10 @@ def check_input(inp, lst, case_sensitive = False, verbose = True):
         if isinstance(inp_check, str):
             if inp_check.startswith(inp) or not case_sensitive and inp_check.lower().startswith(inp.lower()):
                 found_options.append(inp_check)
-            if inp_check == inp or not case_sensitive and inp_check.lower() == inp.lower():
+            if inp_check == inp:
+                match = 2
+                found = inp_check
+            elif match < 2 and not case_sensitive and inp_check.lower() == inp.lower():
                 match = 1
                 found = inp_check
         else:
@@ -37,9 +40,9 @@ def check_input(inp, lst, case_sensitive = False, verbose = True):
                 match = 1
                 found = inp_check
 
-    #print(found_options, match)
-    
-    if match == 1:
+    #print(inp, found_options, found)
+
+    if match > 0:
         out = found
         if verbose: print("OK, you have chosen '{}'.".format(out))
     elif len(found_options) == 0:

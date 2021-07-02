@@ -46,7 +46,7 @@ def main():
             answer = floa
         #print(i, answer.__class__)
 
-        print(check_input(answer, options, False, True))
+        print(check_input(answer, options, False))
 
 if __name__ == '__main__':
     main()
