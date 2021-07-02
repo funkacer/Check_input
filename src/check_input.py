@@ -14,7 +14,7 @@ def check_input(inp, lst, case_sensitive = False, verbose = True):
     assert isinstance(lst, list), 'Input must be non-empty list'
     for l in lst:
         assert len(str(l)) > 0, 'List must not include empty strings'
-        assert isinstance(l, (str, int, float)), 'List must include strings, floats or integers'
+        #assert isinstance(l, (str, int, float)), 'List must include strings, floats or integers'
         if str(l).startswith(' ') and verbose:
             print("Warning: option '{}' starts with blank.".format(l))
 
@@ -32,23 +32,25 @@ def check_input(inp, lst, case_sensitive = False, verbose = True):
                 found = inp_check
         else:
             if str(inp_check).startswith(str(inp)):
-                found_options.append(str(inp_check))
+                found_options.append(inp_check)
             if inp_check == inp:
                 match = 1
                 found = inp_check
 
-    if len(found_options) == 0:
+    #print(found_options, match)
+    
+    if match == 1:
+        out = found
+        if verbose: print("OK, you have chosen '{}'.".format(out))
+    elif len(found_options) == 0:
         out = None
-        if verbose: print("Your answer doesn't fit to any option('{}'). Please try again.".format("', '".join(f for f in lst)))
+        if verbose: print("Your answer doesn't fit to any option('{}'). Please try again.".format("', '".join(str(f) for f in lst)))
     elif len(found_options) == 1:
         out = found_options[0]
         if verbose: print("OK, you have chosen '{}'.".format(out))
-    elif match == 1:
-        out = found
-        if verbose: print("OK, you have chosen '{}'.".format(out))
     else:
         out = None
-        if verbose: print("Your answer fits to multiple options ('{}'). Please try again.".format("', '".join(f for f in found_options)))
+        if verbose: print("Your answer fits to multiple options ('{}'). Please try again.".format("', '".join(str(f) for f in found_options)))
 
     #print(match, found, found_options, lst)
     return out
