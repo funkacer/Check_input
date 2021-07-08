@@ -32,7 +32,7 @@ class TestCase(unittest.TestCase):
         input = 2.0
         self.assertEqual(input, check_input(input, options))
 
-    def test_integers_mismash2(self):
+    def test_integers_mishmash2(self):
         from src.check_input import check_input
         options = [-22,-11,-2,-1,0,1,2,11,22]
         for input in [-22.0,-11.0,-2.0,-1.0,0.0,1.0,2.0,11.0,22.0]:
@@ -47,15 +47,16 @@ class TestCase(unittest.TestCase):
         for input in options:
             self.assertEqual(input, check_input(input, options))
 
-    '''
-    def test_integers_mismash3(self):
-        from src.check_input import check_input
-        options = [-22,-11,-2,-1,0,1,2,11,22]
-        for input in options:
-            with self.assertRaises(TypeError):
-                check_input(input, options)
-    '''
 
+    def test_integers_mishmash3(self):
+        from src.check_input import check_input
+        options = ['-22','-11','-2','-1','0','1','2','11','22']
+        options.extend([-22,-11,-2,-1,0,1,2,11,22])
+        print(options)
+        for input in options:
+            self.assertEqual(input, check_input(input, options))
+
+            
     def test_floats_simple(self):
         from src.check_input import check_input
         options = [-220.9,-22.8,-11.7,-2.6,-1.5,0.4,1.3,2.2,11.1,22.0, 220.99]
@@ -68,7 +69,7 @@ class TestCase(unittest.TestCase):
         for input in [-2,-1,0,1,2]:
             self.assertEqual(input, check_input(input, options))
 
-    def test_floats_mismash1(self):
+    def test_floats_mishmash1(self):
         from src.check_input import check_input
         options = [1.0,2.0]
         input = 1
@@ -77,7 +78,7 @@ class TestCase(unittest.TestCase):
         input = 2
         self.assertEqual(input, check_input(input, options))
 
-    def test_floats_mismash2(self):
+    def test_floats_mishmash2(self):
         from src.check_input import check_input
         options = [-22,-11,-2,-1,0,1,2,11,22]
         for input in [-22.0,-11.0,-2.0,-1.0,0.0,1.0,2.0,11.0,22.0]:
@@ -91,7 +92,7 @@ class TestCase(unittest.TestCase):
             self.assertEqual(input, check_input(input, options))
 
     '''
-    def test_integers_mismash3(self):
+    def test_integers_mishmash3(self):
         from src.check_input import check_input
         options = [-22,-11,-2,-1,0,1,2,11,22]
         for input in options:
@@ -129,7 +130,7 @@ class TestCase(unittest.TestCase):
             self.assertEqual(None, check_input(input[0], options))
 
     '''
-    def test_integers_mismash3(self):
+    def test_integers_mishmash3(self):
         from src.check_input import check_input
         options = ["Ahoj","ahoj"]
         for input in [-2,-1,0,1,2]:
