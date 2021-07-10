@@ -12,11 +12,22 @@ def check_input(inp, lst, case_sensitive = True, verbose = True):
     #if not isinstance(inp, str): inp = str(inp)
     assert len(str(inp)) > 0, 'Input must not be an empty string'
     assert isinstance(lst, list), 'Input must be non-empty list'
+    i, s = 0, 0
+    if isinstance(inp, str):
+        s = 1
+    else:
+        i = 1
     for l in lst:
         assert len(str(l)) > 0, 'List must not include empty strings'
         #assert isinstance(l, (str, int, float)), 'List must include strings, floats or integers'
         if str(l).startswith(' ') and verbose:
             print("Warning: option '{}' starts with blank.".format(l))
+        if isinstance(l, str):
+            s = 1
+        else:
+            i = 1
+    if s and i:
+        raise TypeError("Type mishmash. Input and options must either stings or numerals.")
 
     found_options = []
     match = 0

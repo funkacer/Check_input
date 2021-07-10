@@ -54,7 +54,8 @@ class TestCase(unittest.TestCase):
         options.extend([-22,-11,-2,-1,0,1,2,11,22])
         print(options)
         for input in options:
-            self.assertEqual(input, check_input(input, options))
+            with self.assertRaises(TypeError):
+                check_input(input, options)
 
             
     def test_floats_simple(self):
@@ -91,14 +92,13 @@ class TestCase(unittest.TestCase):
         for input in options:
             self.assertEqual(input, check_input(input, options))
 
-    '''
-    def test_integers_mishmash3(self):
+
+    def test_floats_mishmash3(self):
         from src.check_input import check_input
-        options = [-22,-11,-2,-1,0,1,2,11,22]
+        options = [-22.0,-11.0,-2.0,-1.0,0.0,1.0,2.0,11.0,22.0]
         for input in options:
-            with self.assertRaises(TypeError):
-                check_input(input, options)
-    '''
+            self.assertEqual(input, check_input(int(input), options))
+
 
     def test_strings_simple(self):
         from src.check_input import check_input
@@ -129,10 +129,11 @@ class TestCase(unittest.TestCase):
             print(input, check_input(input[0], options))
             self.assertEqual(None, check_input(input[0], options))
 
-    '''
-    def test_integers_mishmash3(self):
+
+    def test_strings_mishmash3(self):
         from src.check_input import check_input
         options = ["Ahoj","ahoj"]
-        for input in [-2,-1,0,1,2]:
-            self.assertEqual(input[0], check_input(input, options))
-    '''
+        for input in [-2.0,-1.0,0.0,1.0,2.0]:
+            with self.assertRaises(TypeError):
+                check_input(input, options)
+
